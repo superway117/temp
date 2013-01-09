@@ -63,7 +63,7 @@ ramdomDate = ->
 ramdomAddr = ->
     start = 110000
     end = 659004
-    addr = start+Math.round(Math.random()*10000)
+    addr = start+Math.round(Math.random()*50000)
     console.log "addr is #{addr}"
     "#{addr}"
 
@@ -79,12 +79,16 @@ ramdomID = ->
     console.log "id number is #{id}"
     id 
 
+ramdomMail = ->
+    num = Math.round(Math.random()*1000) # 3 num
+    "superway.pan.#{num}@gmail.com"
 
-postData = -> 
-    keyvalue = ramdomID()
+postData = (timerID,mail,key)-> 
+    if not key then keyvalue = ramdomID() else keyvalue= key
+    mail = ramdomMail()  if not mail 
     iShoppingCartObject = 
         {
-            "emailAddress": "superway.pan@gmail.com",
+            "emailAddress": mail,
             "firstName" : "Li",
             "lastName" : "Sheng",
             "governmentID" : keyvalue,
@@ -97,8 +101,19 @@ postData = ->
         }
     encryptAndPost(keyvalue,iShoppingCartObject);
     timerCount++;
-    if(timerCount>2)
+    if(timerCount>10000)
         clearInterval(timerID)
 
+postMe = ->
+    postData(timerID1,"superway_build@hotmail.com","360203198111073519")
 
-timerID = setInterval(postData, 10000)
+postMe1 = ->
+    postData(timerID2,"superway.pan@gmail.com","360203198111073519")
+
+postRamdon = ->
+    postData(timerID3)
+
+timerID1 = setInterval(postMe, 10000)
+timerID2 = setInterval(postMe1, 10000)
+timerID3 = setInterval(postRamdon, 10000)
+
